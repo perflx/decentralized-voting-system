@@ -63,19 +63,3 @@ If you recompile the contract, don't forget to update the ABI in `frontend/src/c
 ```bash
 npx hardhat test
 ```
-
-## Known limitations
-
-This is a learning project, not a production system. Things I know are not perfect:
-
-- **Votes are not anonymous after reveal.** On the reveal phase the transaction is sent from your wallet, so anyone can see on-chain which address voted for what. Commit-reveal only hides the votes *during* the voting, not who voted for whom. Fixing this needs something like zero-knowledge proofs (e.g. Semaphore or MACI).
-- **The hash is not bound to the voter or the poll.** It is just `keccak256(option, salt)`. Someone could copy another person's hash in the commit phase and reveal the same vote after seeing the salt. Using `msg.sender` and `pollId` inside the hash would fix it.
-- **Vote and salt are stored in `localStorage`.** If you clear the browser data or switch devices, you can't reveal your vote anymore.
-- **No voter registration.** Any address can vote, so one person with many wallets can vote many times.
-
-## Ideas for later
-
-- Add `msg.sender` and `pollId` to the commit hash
-- Anonymous voting with ZK proofs
-- Whitelist of allowed voters
-- Deploy to a testnet (Sepolia)
